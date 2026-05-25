@@ -4,6 +4,7 @@ project(FileExplorer)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Try to find a locally installed raylib
 find_package(raylib 5.5 QUIET)
@@ -49,8 +50,13 @@ if (WIN32)
     set(APP_ICON app_icon.rc)
 endif()
 
-# Create executable
-add_executable(main ${PROJECT_SRC_CPP} ${RLIMGUI_SRC} ${IMGUI_SRC} ${TEXTEDITOR_SRC} ${APP_ICON})
+add_executable(main 
+    ${PROJECT_SRC_CPP} 
+    ${RLIMGUI_SRC} 
+    ${IMGUI_SRC} 
+    ${TEXTEDITOR_SRC} 
+    ${APP_ICON}
+)
 
 target_include_directories(main PRIVATE
     ${raylib_SOURCE_DIR}/src
@@ -60,4 +66,20 @@ target_include_directories(main PRIVATE
     ${CMAKE_SOURCE_DIR}/TextEditor  
 )
 
-target_link_libraries(main raylib)
+target_link_libraries(main PRIVATE raylib)
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+  target_compile_options(main PRIVATE 
+    $<$<CONFIG:Debug>:/fsanitize=address>
+  )
+  target_link_options(main PRIVATE 
+    $<$<CONFIG:Debug>:/fsanitize=address>
+  )
+else()
+  target_compile_options(main PRIVATE 
+    $<$<CONFIG:Debug>:-fsanitize=address -fno-omit-frame-pointer -g>
+  )
+  target_link_options(main PRIVATE 
+    $<$<CONFIG:Debug>:-fsanitize=address>
+  )
+endif()

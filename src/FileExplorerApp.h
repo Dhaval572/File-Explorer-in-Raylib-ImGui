@@ -1,17 +1,17 @@
 #pragma once
 
-#include <format>
+#include <format> // IWYU pragma: keep
 #include <array>
 #include <filesystem>
-#include <fstream>
+#include <fstream> // IWYU pragma: keep
 #include <imgui.h>
 #include <rlImGui.h>
 #include <imfilebrowser.h>
 #include <map>
 #include <string>
-#include <vector>
+#include <vector> // IWYU pragma: keep
 #include <misc/cpp/imgui_stdlib.h>
-#include <ranges>
+#include <ranges> // IWYU pragma: keep
 #include "TextEditor.h" 
 using namespace std;
 namespace fs = std::filesystem;

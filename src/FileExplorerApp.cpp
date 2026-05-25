@@ -38,7 +38,7 @@ FileExplorerApp::FileExplorerApp()
     m_bShowSaveBeforeDirChangeConfirm = false;
 
     // Image handling variables
-    m_ImgTexture = { 0 };           	// Initialize to empty texture
+    m_ImgTexture = {};           	// Initialize to empty texture
     m_bImgLoaded = false;           	// Track if image is loaded
     m_LoadedImgPath = fs::path();   	// Track which image is currently loaded
 	m_PendingFileToOpen = fs::path();  
@@ -672,9 +672,9 @@ void FileExplorerApp::HandleDeletePopup(bool& b_Delete)
         bool b_RenamingSelectedFile = !m_SelectedFile.empty() && 
 									  fs::exists(m_SelectedFile);
 
-        bool b_IsDir = b_RenamingSelectedFile ?
-             fs::is_directory(m_SelectedFile) : 
-             fs::is_directory(current_path);
+        // bool b_IsDir = b_RenamingSelectedFile ?
+        //      fs::is_directory(m_SelectedFile) : 
+        //      fs::is_directory(current_path);
 
         if (b_RenamingSelectedFile)
         {
@@ -763,7 +763,7 @@ void FileExplorerApp::HandleExitConfirmPopup()
         ImGui::Spacing();
         
         float button_width = 100.0f;
-        float spacing = ImGui::GetStyle().ItemSpacing.x;
+        // float spacing = ImGui::GetStyle().ItemSpacing.x;
         if (ImGui::Button("Save", ImVec2(button_width + 20, 0)))
         {
             // Save the file first
@@ -828,7 +828,7 @@ void FileExplorerApp::HandleSaveBeforeOpenPopup()
         ImGui::Spacing();
 
 		float button_width = 100.0f;
-        float spacing = ImGui::GetStyle().ItemSpacing.x;
+        // float spacing = ImGui::GetStyle().ItemSpacing.x;
 		if (ImGui::Button("Save", ImVec2(button_width + 20, 0)))
 		{
 			if (m_SelectedFile != fs::path() && m_bFileLoaded)
